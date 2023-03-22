@@ -4,14 +4,18 @@ version = "0.1.0"
 description = ""
 authors = ["ada0l <andreika.varfolomeev@yandex.ru>"]
 readme = "README.md"
-packages = [{include = "eco2ai_playground"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 fastapi = "^0.94.1"
 uvicorn = "^0.21.0"
-
+sqlalchemy = "^2.0.6"
+alembic = "^1.10.2"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+eco2ai-playground-api = "eco2ai_playground.api.__main__:main"
+eco2ai-playground-db = "eco2ai_playground.db.__main__:main"
