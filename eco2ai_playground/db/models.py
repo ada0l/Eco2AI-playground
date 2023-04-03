@@ -44,4 +44,3 @@ class Consumption(Base):
     duration: Mapped[float]
     power: Mapped[float]
     co2: Mapped[float]
-    cost: Mapped[float]
