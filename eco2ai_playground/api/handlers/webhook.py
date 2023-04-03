@@ -1,5 +1,3 @@
-import logging
-
 from fastapi import APIRouter, Depends, Response, status
 from pydantic import ValidationError
 from sqlalchemy import select
