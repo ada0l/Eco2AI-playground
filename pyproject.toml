@@ -11,6 +11,8 @@ fastapi = "^0.94.1"
 uvicorn = "^0.21.0"
 sqlalchemy = "^2.0.6"
 alembic = "^1.10.2"
+websockets = "^10.4"
+aiosqlite = "^0.18.0"
 
 [build-system]
 requires = ["poetry-core"]
