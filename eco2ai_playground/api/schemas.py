@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import UUID4, BaseModel, Field
 
 
-class ConsumptionListStrInPydantic(BaseModel):
+class ConsumptionListStrIn(BaseModel):
     id: list[str]
     project_name: list[str]
     experiment_description: list[str]
@@ -34,3 +34,26 @@ class ConsumptionIn(BaseModel):
     gpu_name: str
     os: str
     region: str
+
+
+class ConsumptionInProjectDB(BaseModel):
+    duration: str
+    power: float
+    co2: float
+
+    class Config:
+        orm_mode = True
+
+class ProjectDB(BaseModel):
+    project_id: UUID4
+    name: str
+    description: str
+    start_time: datetime
+    cpu: str
+    gpu: str
+    os: str
+    region: str
+    consumptions: list[ConsumptionInProjectDB]
+
+    class Config:
+        orm_mode = True
