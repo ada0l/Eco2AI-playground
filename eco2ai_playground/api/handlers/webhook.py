@@ -4,8 +4,8 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
 from eco2ai_playground.api.schemas import (
-    ConsumptionInPydantic,
-    ConsumptionListStrInPydantic,
+    ConsumptionIn,
+    ConsumptionListStrIn,
 )
 from eco2ai_playground.db.models import Consumption, Project
 from eco2ai_playground.db.session import get_session
@@ -13,14 +13,13 @@ from eco2ai_playground.db.session import get_session
 webhook_router = APIRouter()
 
 
-@webhook_router.post("/")
 async def webhook(
-    consumption_list_str_in: ConsumptionListStrInPydantic,
+    consumption_list_str_in: ConsumptionListStrIn,
     db: AsyncSession = Depends(get_session),
 ):
     raw_dict = consumption_list_str_in.convert_to_dict()
     try:
-        consumption_in = ConsumptionInPydantic(**raw_dict)
+        consumption_in = ConsumptionIn(**raw_dict)
     except ValidationError as ex:
         return Response(
             content=ex.json(), status_code=status.HTTP_422_UNPROCESSABLE_ENTITY

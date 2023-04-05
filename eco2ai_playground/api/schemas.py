@@ -21,7 +21,7 @@ class ConsumptionListStrInPydantic(BaseModel):
         return {field: value[0] for field, value in self.dict().items()}
 
 
-class ConsumptionInPydantic(BaseModel):
+class ConsumptionIn(BaseModel):
     id: UUID4
     project_name: str
     experiment_description: str
