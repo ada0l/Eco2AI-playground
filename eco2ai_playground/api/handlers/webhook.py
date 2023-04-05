@@ -13,6 +13,7 @@ from eco2ai_playground.db.session import get_session
 webhook_router = APIRouter()
 
 
+@webhook_router.post("/", response_model=dict)
 async def webhook(
     consumption_list_str_in: ConsumptionListStrIn,
     db: AsyncSession = Depends(get_session),
