@@ -27,7 +27,7 @@ async def get_projects(
     return query.scalars().unique().all()
 
 
-@project_router.get("/<id>", response_model=ProjectWithConsumptionsDB)
+@project_router.get("/{id}", response_model=ProjectWithConsumptionsDB)
 async def get_project(
     id: str,
     db: AsyncSession = Depends(get_session),
