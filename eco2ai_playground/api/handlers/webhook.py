@@ -3,9 +3,13 @@ from pydantic import ValidationError
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
+from eco2ai_playground.api.broadcaster import broadcaster
 from eco2ai_playground.api.schemas import (
+    ConsumptionDB,
     ConsumptionIn,
     ConsumptionListStrIn,
+    Notification,
+    NotificationType,
 )
 from eco2ai_playground.db.models import Consumption, Project
 from eco2ai_playground.db.session import get_session
@@ -57,4 +61,13 @@ async def webhook(
     )
     db.add(consumption)
     await db.commit()
+    await db.refresh(consumption)
+    await broadcaster.publish(
+        channel="general",
+        message=Notification[ConsumptionDB](
+            type=NotificationType.new_consumption,
+            project_id=consumption.project.project_id,
+            data=ConsumptionDB.from_orm(consumption),
+        ).json(),
+    )
     return {}
