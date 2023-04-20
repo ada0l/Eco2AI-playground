@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from sqlalchemy.orm import joinedload
 
-from eco2ai_playground.api.schemas import ProjectDB
+from eco2ai_playground.api.schemas import ProjectWithConsumptionsDB
 from eco2ai_playground.core.dependencies import Pagination, get_pagination
 from eco2ai_playground.db.models import Project
 from eco2ai_playground.db.session import get_session
@@ -11,7 +11,7 @@ from eco2ai_playground.db.session import get_session
 project_router = APIRouter()
 
 
-@project_router.get("/", response_model=list[ProjectDB])
+@project_router.get("/", response_model=list[ProjectWithConsumptionsDB])
 async def get_projects(
     pag: Pagination = Depends(get_pagination),
     db: AsyncSession = Depends(get_session),
@@ -27,7 +27,7 @@ async def get_projects(
     return query.scalars().unique().all()
 
 
-@project_router.get("/<id>", response_model=ProjectDB)
+@project_router.get("/<id>", response_model=ProjectWithConsumptionsDB)
 async def get_project(
     id: str,
     db: AsyncSession = Depends(get_session),
