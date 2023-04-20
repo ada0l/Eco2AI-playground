@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from sqlalchemy.orm import joinedload
@@ -37,4 +37,10 @@ async def get_project(
         .filter(Project.project_id == id)
         .options(joinedload(Project.consumptions))
     )
-    return query.scalars().first()
+    project = query.scalars().first()
+    if project is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Project not found",
+        )
+    return project
