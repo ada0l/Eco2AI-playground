@@ -7,13 +7,15 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "^0.94.1"
+fastapi = "^0.100.0"
 uvicorn = "^0.21.0"
 sqlalchemy = "^2.0.6"
 alembic = "^1.10.2"
 websockets = "^10.4"
 aiosqlite = "^0.18.0"
 broadcaster = "^0.2.0"
+asyncpg = "^0.28.0"
+pydantic-settings = "^2.0.2"
 
 [build-system]
 requires = ["poetry-core"]
