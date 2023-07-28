@@ -1,9 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
+from eco2ai_playground.core.settings import settings
 
-engine = create_async_engine(
-    "sqlite+aiosqlite:///eco2ai_playground.db", future=True, echo=False
-)
+engine = create_async_engine(settings.DATABASE_URL, future=True, echo=False)
 async_session = sessionmaker(
     engine, expire_on_commit=False, class_=AsyncSession
 )

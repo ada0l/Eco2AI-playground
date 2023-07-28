@@ -3,8 +3,9 @@ import os
 from pathlib import Path
 
 from alembic.config import CommandLine, Config
+from eco2ai_playground.core.settings import settings
 
-DEFAULT_DB_URL = "sqlite:///eco2ai_playground.db"
+DEFAULT_DB_URL = settings.DATABASE_URL_FOR_MIGRATE
 PROJECT_PATH = Path(__file__).parent.parent.resolve()
 
 
