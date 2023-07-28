@@ -16,6 +16,9 @@ aiosqlite = "^0.18.0"
 broadcaster = "^0.2.0"
 asyncpg = "^0.28.0"
 pydantic-settings = "^2.0.2"
+broadcast = {extras = ["redis"], version = "^1.1.2"}
+asyncio-redis = "^0.16.0"
+psycopg2-binary = "^2.9.6"
 
 [build-system]
 requires = ["poetry-core"]
