@@ -13,6 +13,4 @@ COPY . /eco2ai_playground/
 RUN pip install poetry
 RUN poetry install
 
-ENTRYPOINT ["poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0"]
-
 EXPOSE 8000
