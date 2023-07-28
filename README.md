@@ -14,6 +14,10 @@ cp example.env .env
 docker compose up
 ```
 
+3) You can find documentation of rest in http://locahost:8000/docs
+
+4) Good luck, have fun
+
 # Webhook (http://localhost:8000/ws)
 
 Example of json about notification of new consumption:
