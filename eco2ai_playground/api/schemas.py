@@ -3,7 +3,6 @@ from enum import Enum
 from typing import Generic, TypeVar
 
 from pydantic import UUID4, BaseModel, Field
-from pydantic.generics import GenericModel
 
 
 class ConsumptionListStrIn(BaseModel):
@@ -40,21 +39,21 @@ class ConsumptionIn(BaseModel):
 
 
 class ConsumptionDB(BaseModel):
-    duration: str
+    duration: float
     power: float
     co2: float
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ConsumptionInProjectDB(BaseModel):
-    duration: str
+    duration: float
     power: float
     co2: float
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ProjectWithConsumptionsDB(BaseModel):
@@ -69,7 +68,7 @@ class ProjectWithConsumptionsDB(BaseModel):
     consumptions: list[ConsumptionInProjectDB]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 NotificationItem = TypeVar("NotificationItem", bound=BaseModel)
@@ -79,7 +78,7 @@ class NotificationType(str, Enum):
     new_consumption = "new_consumption"
 
 
-class Notification(GenericModel, Generic[NotificationItem]):
+class Notification(BaseModel, Generic[NotificationItem]):
     type: NotificationType
     project_id: UUID4
     data: NotificationItem

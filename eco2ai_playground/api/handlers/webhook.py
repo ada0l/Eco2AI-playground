@@ -67,7 +67,7 @@ async def webhook(
         message=Notification[ConsumptionDB](
             type=NotificationType.new_consumption,
             project_id=consumption.project.project_id,
-            data=ConsumptionDB.from_orm(consumption),
-        ).json(),
+            data=ConsumptionDB.model_validate(consumption),
+        ).model_dump_json(),
     )
     return {}
