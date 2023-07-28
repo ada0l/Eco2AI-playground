@@ -21,7 +21,7 @@ class Base(DeclarativeBase):
 
 class Project(Base):
     __tablename__ = "project"
-    project_id: Mapped[str] = mapped_column(String(32), primary_key=True)
+    project_id: Mapped[str] = mapped_column(String(36), primary_key=True)
     name: Mapped[str] = mapped_column(String(256))
     description: Mapped[str] = mapped_column(String(256))
     start_time: Mapped[datetime]
