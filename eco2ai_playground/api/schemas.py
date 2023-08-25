@@ -1,8 +1,8 @@
 from datetime import datetime
 from enum import Enum
-from typing import Generic, TypeVar
+from typing import Generic, TypeVar, Union
 
-from pydantic import UUID4, BaseModel, Field
+from pydantic import UUID4, BaseModel, Field, ValidationError, field_serializer
 
 
 class ConsumptionListStrIn(BaseModel):
@@ -38,20 +38,45 @@ class ConsumptionIn(BaseModel):
     region: str
 
 
+class Epoch(BaseModel):
+    epoch: int
+    train_loss: float
+    train_accuracy: float
+    test_loss: float
+    test_accuracy: float
+
+
 class ConsumptionDB(BaseModel):
     duration: float
     power: float
     co2: float
+    epoch_str: Epoch | str | None
+
+    @field_serializer("epoch_str")
+    def serialize_epoch(self, epoch_str: str) -> Union[Epoch, None]:
+        if epoch_str == "N/A":
+            return None
+
+        epoch_splited = epoch_str.split(",")
+        epoch_entries = map(lambda x: x.split(":"), epoch_splited)
+        epoch_filtered = [epoch for epoch in epoch_entries if len(epoch) == 2]
+        epoch_dict = {
+            key.strip(): value.strip() for key, value in epoch_filtered
+        }
+
+        print(epoch_dict)
+
+        try:
+            return Epoch(**epoch_dict)
+        except ValidationError as ex:
+            print(ex)
+            return None
 
     class Config:
         from_attributes = True
 
 
-class ConsumptionInProjectDB(BaseModel):
-    duration: float
-    power: float
-    co2: float
-
+class ConsumptionInProjectDB(ConsumptionDB):
     class Config:
         from_attributes = True
 
